@@ -1,0 +1,27 @@
+* {
+    justify-content: center;
+    font-size: 16px;
+    margin: 0 0;
+    font-family: sans-serif;
+    box-sizing: border-box;
+
+
+  }
+  
+#title{
+    width: 100%;
+    height: 700px;
+    background-image: linear-gradient(#C41A1A, #FFBF1C);
+    color: white;
+    text-align: center;
+    
+}
+#title h1{
+    font-size: 7rem;
+
+    
+}
+#title h2{
+    padding-top: 10rem;
+    font-size: 4rem;
+}
