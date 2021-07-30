@@ -4,21 +4,20 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    {% load crispy_forms_tags %}
 
     <title> TEST </title>
 
   </head>
 
   <body>
-    <!--
-    {% load crispy_forms_tags %}
 
     <form method="POST" class="form-group">
-			{% csrf_token %}
-			<legend class="border-bottom mb-3">Create an Account</legend>
-			{{form|crispy}}
-			<button name="create", type="submit", class="btn btn-success">Register</button>
-		</form> -->
+      {% csrf_token %}
+      <legend class="border-bottom mb-3">Create an Account</legend>
+      {% crispy form %}
+      <button name="create" type="submit" class="btn btn-success">Register</button>
+    </form>
 
 
   </body>

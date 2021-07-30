@@ -16,7 +16,9 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 from . import view_student as vs
+from . import view_teacher as vt
 
 urlpatterns = [
-    path("sign-up", vs.StudentSignUpForm, name="sign-up")
+    path("student-sign-up", vs.StudentSignUpView.as_view(), name="student-sign-up"),
+    path("teacher-sign-up", vt.TeacherSignUpView.as_view(), name="teacher-sign-up"),
 ]
