@@ -3,7 +3,7 @@ from django import forms
 from django.contrib.auth.forms import UserCreationForm
 from django.db import transaction
 
-from .models import Student, User
+from .models import User
 
 
 class StudentSignUpForm(UserCreationForm):
@@ -13,11 +13,11 @@ class StudentSignUpForm(UserCreationForm):
         fields = ['username', 'email', 'password1', 'password2']
 
     @transaction.atomic
-    def save(self):
+    def save(self, commit=True):
         user = super().save(commit=False)
         user.is_student = True
-        user.save()
-        student = Student.objects.create(user=user)
+        if commit:
+            user.save()
         return user
 
 
