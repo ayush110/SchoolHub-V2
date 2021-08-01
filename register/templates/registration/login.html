@@ -11,23 +11,12 @@
         integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
 
     {% load crispy_forms_tags %}
+    {% load widget_tweaks %}
 
     <script>
-        const signUpButton = document.getElementById('signUp');
-        const signInButton = document.getElementById('signIn');
-        const container = document.getElementById('container');
-
-        signUpButton.addEventListener('click', () => {
-            container.classList.add("right-panel-active");
-        });
-
-        signInButton.addEventListener('click', () => {
-            container.classList.remove("right-panel-active");
-        });
 
         function redirect_to_login_page() {
             window.location.replace("http://127.0.0.1:8000/login");
-            console.log("HIIHIH");
         }
 
         function redirect_to_sign_up_page() {
@@ -427,13 +416,14 @@
         <div class="form-box">
             <div class='button-box'>
                 <div id='btn'></div>
-                <button type='button' onclick='student()' class='toggle-btn level'>Student</button>
-                <button type='button' onclick='teacher()' class='toggle-btn level'>Teacher</button>
+                <button type='button' onclick='student()' class='toggle-btn level' id='studentButton'>Student</button>
+                <button type='button' onclick='teacher()' class='toggle-btn level' id='teacherButton'>Teacher</button>
             </div>
         </div>
     </div>
 
     -->
+
 
     <br />
     <br />
@@ -487,7 +477,7 @@
                 </form>
             </div>
             <div class="form-container sign-in-container">
-                <form action="#">
+                <form action="#" method="post">
                     <h1>Login</h1> <br />
 
 
@@ -523,7 +513,7 @@
 
                     {% for field in form.visible_fields %}
                         {{ field.errors }}
-                        {{ field }}
+                        {% render_field field placeholder=field.name %}
                     {% endfor %}
 
                     <input type="submit" value="Login">

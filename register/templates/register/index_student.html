@@ -13,21 +13,12 @@
     {% load crispy_forms_tags %}
 
     <script>
-        const signUpButton = document.getElementById('signUp');
-            const signInButton = document.getElementById('signIn');
-            const container = document.getElementById('container');
-
-            signUpButton.addEventListener('click', () => {
-                container.classList.add("right-panel-active");
-            });
-
-            signInButton.addEventListener('click', () => {
-                container.classList.remove("right-panel-active");
-            });
+            function teacherbutton() {
+                window.location.replace("http://127.0.0.1:8000/register/teacher-sign-up");
+            }
 
             function redirect_to_login_page() {
                 window.location.replace("http://127.0.0.1:8000/login");
-                console.log("HIIHIH");
             }
 
             function redirect_to_sign_up_page() {
@@ -383,6 +374,13 @@
     font-weight: 600;
     color: #950707;
 }
+
+#studentButton {
+    background-color: #950707;
+    color: white;
+    box-shadow: #333;
+}
+
     </style>
 </head>
 
@@ -411,19 +409,16 @@
 
     <!--SIGN IN AS STUDENT OR TEACHER-->
 
-    <!--
     <div class="signin text-center">
         <h2>I am signing in as a</h2>
         <div class="form-box">
             <div class='button-box'>
                 <div id='btn'></div>
-                <button type='button' onclick='student()' class='toggle-btn level'>Student</button>
-                <button type='button' onclick='teacher()' class='toggle-btn level'>Teacher</button>
+                <button type='button' class='toggle-btn level' id='studentButton'>Student</button>
+                <button type='button' class='toggle-btn level' onClick="teacherbutton()" id='teacherButton'>Teacher</button>
             </div>
         </div>
     </div>
-
-    -->
 
     <br />
     <br />
@@ -477,7 +472,7 @@
                 </form>
             </div>
             <div class="form-container sign-in-container">
-                <form action="#">
+                <form action="#" method="post">
                     <h1>Sign Up</h1> <br />
 
 
@@ -512,6 +507,7 @@
                     {% endfor %}
 
                     {% for field in form.visible_fields %}
+                        <!-- {{ field.label_tag }} -->
                         {{ field.errors }}
                         {{ field }}
                     {% endfor %}
