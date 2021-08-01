@@ -9,7 +9,7 @@ from .models import User
 class StudentSignUpView(CreateView):
     model = User
     form_class = StudentSignUpForm
-    template_name = 'register/register.html'
+    template_name = 'register/index.html'
 
     def get_context_data(self, **kwargs):
         kwargs['user_type'] = 'student'
