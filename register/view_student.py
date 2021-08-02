@@ -18,7 +18,7 @@ class StudentSignUpView(CreateView):
 
     def form_valid(self, form):
         print("FORM VALID \n\n\n")
-        if super().form_valid(form):
+        if form.is_valid():
             user = form.save()
             login(self.request, user)
             return redirect('/student-home')

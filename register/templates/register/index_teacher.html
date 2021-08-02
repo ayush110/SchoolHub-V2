@@ -24,6 +24,14 @@
             function redirect_to_sign_up_page() {
                 window.location.replace("http://127.0.0.1:8000/register/student-sign-up");
             }
+
+            function redirect_to_teacher_home_page() {
+                window.location.replace("http://127.0.0.1:8000/student-home");
+            }
+
+            function redirect_to_student_home_page() {
+                window.location.replace("http://127.0.0.1:8000/teacher-home");
+            }
         </script>
 
     <style>
@@ -386,6 +394,8 @@
 
 <body>
 
+    {% if not user.is_authenticated %}
+    
     <!--WELCOME SECTION-->
     <div class="container-fluid" id="title">
         <h2>WELCOME TO</h2>
@@ -540,6 +550,18 @@
         <h1>Your school is not registered?</h1>
         <button class="school-register-btn">Register my School</button>
     </div>
+
+    {% elif user.is_student %}
+    
+    <h4>You are already logged in, click here to go to your home page</h4>
+    <button class="homePage" onClick="redirect_to_student_home_page">Home Page</button>
+    
+    {% else %}
+    
+    <h4>You are already logged in, click here to go to your home page</h4>
+    <button class="homePage" onClick="redirect_to_teacher_home_page">Home Page</button>
+    
+    {% endif %}
 
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"
         integrity="sha384-IQsoLXl5PILFhosVNubq5LC7Qb9DXgDA9i+tQ8Zj3iwWAwPtgFTxbJ8NT4GN1R8p"
