@@ -40,7 +40,7 @@ INSTALLED_APPS = [
     "register.apps.RegisterConfig",
     'crispy_forms',
     'widget_tweaks',
-    # 'main.apps.MainConfig',
+    'main.apps.MainConfig',
 ]
 
 AUTH_USER_MODEL = "register.User"
@@ -132,6 +132,6 @@ STATICFILES_DIRS = [
 CRISPY_TEMPLATE_PACK = "bootstrap4"
 
 LOGIN_REDIRECT_URL = "/"
-LOGOUT_REDIRECT_URL = "/"
+LOGOUT_REDIRECT_URL = "/register/student-sign-up"
 
 AUTH_USER_MODEL = 'register.User'
