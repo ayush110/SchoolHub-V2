@@ -2,15 +2,21 @@ from .models import User
 from django import forms
 from django.contrib.auth.forms import UserCreationForm
 from django.db import transaction
+from main.models import School
 
 from .models import User
 
+# schools = School.objects.all()
+
 
 class StudentSignUpForm(UserCreationForm):
+    school = forms.ModelChoiceField(
+        queryset=School.objects.all(), required=True, to_field_name="name", empty_label="SELECT YOUR SCHOOL ▼")
 
     class Meta(UserCreationForm.Meta):
         model = User
-        fields = ['username', 'email', 'password1', 'password2']
+        fields = ['school', 'username', 'email', 'password1',
+                  'password2']
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
@@ -21,11 +27,12 @@ class StudentSignUpForm(UserCreationForm):
             {'placeholder': 'Password'})
         self.fields['password2'].widget.attrs.update(
             {'placeholder': 'Repeat password'})
+        self.fields['school'].widget.attrs.update(
+            {'class': 'form-dropdown'})
         if self._meta.model.USERNAME_FIELD in self.fields:
             self.fields[self._meta.model.USERNAME_FIELD].widget.attrs['autofocus'] = True
 
     def save(self, commit=True):
-        print("FORM SAVE\n\n\n")
         user = super().save(commit=False)
         user.is_student = True
         if commit:
@@ -34,10 +41,12 @@ class StudentSignUpForm(UserCreationForm):
 
 
 class TeacherSignUpForm(UserCreationForm):
+    school = forms.ModelChoiceField(
+        queryset=School.objects.all(), required=True, to_field_name="name", empty_label="SELECT YOUR SCHOOL ▼")
 
     class Meta(UserCreationForm.Meta):
         model = User
-        fields = ['username', 'email', 'password1', 'password2']
+        fields = ['school', 'username', 'email', 'password1', 'password2']
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
@@ -48,6 +57,8 @@ class TeacherSignUpForm(UserCreationForm):
             {'placeholder': 'Password'})
         self.fields['password2'].widget.attrs.update(
             {'placeholder': 'Repeat password'})
+        self.fields['school'].widget.attrs.update(
+            {'class': 'form-dropdown'})
         if self._meta.model.USERNAME_FIELD in self.fields:
             self.fields[self._meta.model.USERNAME_FIELD].widget.attrs['autofocus'] = True
 
