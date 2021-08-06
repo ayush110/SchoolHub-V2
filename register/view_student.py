@@ -12,12 +12,10 @@ class StudentSignUpView(CreateView):
     template_name = 'register/index_student.html'
 
     def get_context_data(self, **kwargs):
-        print("GET CONTEXT DATA \n\n\n")
         kwargs['user_type'] = 'student'
         return super().get_context_data(**kwargs)
 
     def form_valid(self, form):
-        print("FORM VALID \n\n\n")
         if form.is_valid():
             user = form.save()
             login(self.request, user)
