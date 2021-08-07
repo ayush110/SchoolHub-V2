@@ -132,6 +132,6 @@ STATICFILES_DIRS = [
 CRISPY_TEMPLATE_PACK = "bootstrap4"
 
 LOGIN_REDIRECT_URL = "/"
-LOGOUT_REDIRECT_URL = "/register/student-sign-up"
+LOGOUT_REDIRECT_URL = "/login"
 
 AUTH_USER_MODEL = 'register.User'
