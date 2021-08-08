@@ -16,7 +16,7 @@ class TeacherSignUpView(CreateView):
         return super().get_context_data(**kwargs)
 
     def form_valid(self, form):
-        if super().form_valid(form):
+        if form.is_valid():
             user = form.save()
             login(self.request, user)
             return redirect('/teacher-home')
