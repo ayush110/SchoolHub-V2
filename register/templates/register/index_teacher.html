@@ -13,25 +13,31 @@
     {% load crispy_forms_tags %}
 
     <script>
-            function studentbutton() {
-                window.location.replace("http://127.0.0.1:8000/register/student-sign-up");
-            }
+            domain = "http://127.0.0.1:8000";
+                function teacherbutton() {
+                    window.location.replace(domain + "/register/teacher-sign-up");
+                }
 
-            function redirect_to_login_page() {
-                window.location.replace("http://127.0.0.1:8000/login");
-            }
+                function redirect_to_login_page() {
+                    window.location.replace(domain + "/login");
+                }
 
-            function redirect_to_sign_up_page() {
-                window.location.replace("http://127.0.0.1:8000/register/student-sign-up");
-            }
+                function redirect_to_sign_up_page() {
+                    window.location.replace(domain + "/register/student-sign-up");
+                }
 
-            function redirect_to_teacher_home_page() {
-                window.location.replace("http://127.0.0.1:8000/student-home");
-            }
+                function redirect_to_teacher_home_page() {
+                    window.location.replace(domain + "/teacher-home");
+                }
 
-            function redirect_to_student_home_page() {
-                window.location.replace("http://127.0.0.1:8000/teacher-home");
-            }
+                function redirect_to_student_home_page() {
+                    window.location.replace(domain + "/student-home");
+
+                }
+
+                function redirect_to_create_school_page() {
+                        window.location.replace(domain + "/create-school");
+                    }
         </script>
 
     <style>
@@ -403,7 +409,7 @@
     border: 0px;
     text-align: center;
     vertical-align: middle;
-    padding-left: 46px;
+    /* padding-left: 46px; */
 }
 
 .form-dropdown:hover {
@@ -509,7 +515,7 @@
 
 
                     <!--Choose School Dropdown-->
-                    <div class="dropdown text-center">
+                    <!-- <div class="dropdown text-center">
                         <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton1"
                             data-bs-toggle="dropdown" aria-expanded="false">
                             Select your School
@@ -519,7 +525,7 @@
                             <li><a class="dropdown-item" href="#">School 2</a></li>
                             <li><a class="dropdown-item" href="#">School 3</a></li>
                         </ul>
-                    </div>
+                    </div> -->
 
                     <!--
                     <input type="email" placeholder="Email" />
@@ -570,18 +576,18 @@
     <!--SCHOOL REGISTRATION SECTION-->
     <div class="text-center register-school">
         <h1>Your school is not registered?</h1>
-        <button class="school-register-btn">Register my School</button>
+        <button class="school-register-btn" onClick="redirect_to_create_school_page()">Register my School</button>
     </div>
 
     {% elif user.is_student %}
     
     <h4>You are already logged in, click here to go to your home page</h4>
-    <button class="homePage" onClick="redirect_to_student_home_page">Home Page</button>
+    <button class="homePage" onClick="redirect_to_student_home_page()">Home Page</button>
     
     {% else %}
     
     <h4>You are already logged in, click here to go to your home page</h4>
-    <button class="homePage" onClick="redirect_to_teacher_home_page">Home Page</button>
+    <button class="homePage" onClick="redirect_to_teacher_home_page()">Home Page</button>
     
     {% endif %}
 

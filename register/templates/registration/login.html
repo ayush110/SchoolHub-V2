@@ -15,21 +15,31 @@
 
     <script>
 
-        function redirect_to_login_page() {
-            window.location.replace("http://127.0.0.1:8000/login");
-        }
+        domain = "http://127.0.0.1:8000";
+            function teacherbutton() {
+                window.location.replace(domain + "/register/teacher-sign-up");
+            }
 
-        function redirect_to_sign_up_page() {
-            window.location.replace("http://127.0.0.1:8000/register/student-sign-up");
-        }
+            function redirect_to_login_page() {
+                window.location.replace(domain + "/login");
+            }
 
-        function redirect_to_teacher_home_page() {
-            window.location.replace("http://127.0.0.1:8000/student-home");
-        }
+            function redirect_to_sign_up_page() {
+                window.location.replace(domain + "/register/student-sign-up");
+            }
 
-        function redirect_to_student_home_page() {
-            window.location.replace("http://127.0.0.1:8000/teacher-home");
-        }
+            function redirect_to_teacher_home_page() {
+                window.location.replace(domain + "/teacher-home");
+            }
+
+            function redirect_to_student_home_page() {
+                window.location.replace(domain + "/student-home");
+
+            }
+
+            function redirect_to_create_school_page() {
+                    window.location.replace(domain + "/create-school");
+                }
 
     </script>
 
@@ -524,7 +534,12 @@
 
                     {% for field in form.visible_fields %}
                         {{ field.errors }}
-                        {% render_field field placeholder=field.name %}
+                        {%if 'username' in field.name%}
+                            {% render_field field placeholder='Username' %}
+                        {%else%}
+                            {% render_field field placeholder='Password' %}
+                        {% endif %}
+                        
                     {% endfor %}
 
                     <input type="submit" value="Login">
@@ -553,18 +568,18 @@
     <!--SCHOOL REGISTRATION SECTION-->
     <div class="text-center register-school">
         <h1>Your school is not registered?</h1>
-        <button class="school-register-btn">Register my School</button>
+        <button class="school-register-btn" onClick="redirect_to_create_school_page()">Register my School</button>
     </div>
 
     {% elif user.is_student %}
     
     <h4>You are already logged in, click here to go to your home page</h4>
-    <button class="homePage" onClick="redirect_to_student_home_page">Home Page</button>
+    <button class="homePage" onClick="redirect_to_student_home_page()">Home Page</button>
     
     {% else %}
     
     <h4>You are already logged in, click here to go to your home page</h4>
-    <button class="homePage" onClick="redirect_to_teacher_home_page">Home Page</button>
+    <button class="homePage" onClick="redirect_to_teacher_home_page()">Home Page</button>
     
     {% endif %}
 
