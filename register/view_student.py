@@ -24,7 +24,7 @@ class StudentSignUpView(CreateView):
             return super().form_valid(form)
 
 
-def StudentRegister(request):
+"""def StudentRegister(request):
     print("\n\n\n\n HIHIHIHI")
     if request.method == "POST":
         print("\n\n\n\n INNNNN")
@@ -35,4 +35,4 @@ def StudentRegister(request):
     else:
         form = StudentSignUpForm()
 
-    return render(request, "register/index_student.html", {"form": form})
+    return render(request, "register/index_student.html", {"form": form})"""

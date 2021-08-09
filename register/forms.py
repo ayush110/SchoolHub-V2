@@ -26,7 +26,7 @@ class StudentSignUpForm(UserCreationForm):
         self.fields['password1'].widget.attrs.update(
             {'placeholder': 'Password'})
         self.fields['password2'].widget.attrs.update(
-            {'placeholder': 'Repeat password'})
+            {'placeholder': 'Confirm Password'})
         self.fields['school'].widget.attrs.update(
             {'class': 'form-dropdown'})
         if self._meta.model.USERNAME_FIELD in self.fields:
