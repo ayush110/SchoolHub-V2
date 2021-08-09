@@ -25,9 +25,12 @@ class Announcements(models.Model):
     announcement_content = models.TextField()
 
     school_announcements = models.ForeignKey(
-        School, on_delete=models.CASCADE)
+        School, on_delete=models.CASCADE, null=True)
     club_announcements = models.ForeignKey(
-        Club, on_delete=models.CASCADE)
+        Club, on_delete=models.CASCADE, null=True)
+
+    def __str__(self):
+        return self.announcement_title
 
 
 class Events(models.Model):
@@ -37,6 +40,9 @@ class Events(models.Model):
     # or we could use the actual datetime field event_date = models.DateTimeField()
 
     school_events = models.ForeignKey(
-        School, on_delete=models.CASCADE)
+        School, on_delete=models.CASCADE, null=True)
     club_events = models.ForeignKey(
-        Club, on_delete=models.CASCADE)
+        Club, on_delete=models.CASCADE, null=True)
+
+    def __str__(self):
+        return self.event_title
