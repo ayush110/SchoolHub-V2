@@ -39,7 +39,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     "register.apps.RegisterConfig",
     'crispy_forms',
-    'widget_tweaks',
+    # 'widget_tweaks',
     'main.apps.MainConfig',
 ]
 
