@@ -36,6 +36,10 @@
 
         }
 
+        function zoom_in_announcement_teacher_home() {
+
+        }
+
     </script>
 
     
@@ -43,6 +47,21 @@
 
 <body>
 
+    <form method="POST">
+
+        {% csrf_token %}
+
+        <button name="create_announcement" type="submit">Create Announcement</button>
+
+        {% for announcement in school.announcements_set.all %}
+
+            <h1>{{announcement.announcement_title}}</h1>
+            <h4>{{announcement.announcement_content}}</h4>
+            <button name="{{announcement.id}}" type="submit">View</button>
+
+        {% endfor %}
+
+    </form>
     
 
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"

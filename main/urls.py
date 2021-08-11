@@ -16,8 +16,17 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 from . import view_create_school
+from . import view_teacher
+from . import view_delete_announcement
 
 
 urlpatterns = [
     path("create-school", view_create_school.createSchoolView, name="create-school"),
+    path("teacher-home", view_teacher.teacher_home, name="teacher-home"),
+    path("school-delete-announcement/<int:id>", view_delete_announcement.school_delete_announcement,
+         name="school-delete-announcement"),
+    path("school-zoom-in-announcement/<int:id>", view_teacher.school_announcement_zoom_in,
+         name="school-zoom-in-announcement"),
+    path("school-create-announcement", view_teacher.school_create_announcement,
+         name="school-create-announcement"),
 ]

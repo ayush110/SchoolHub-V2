@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     'crispy_forms',
     'widget_tweaks',
     'main.apps.MainConfig',
+    'student.apps.StudentConfig',
 ]
 
 AUTH_USER_MODEL = "register.User"

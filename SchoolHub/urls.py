@@ -15,10 +15,24 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
+from django.shortcuts import render, HttpResponseRedirect
+
+
+def redirect1(request, w="", w2=""):
+    if request.user:
+        if request.user.is_student:
+            return HttpResponseRedirect("/student-home")
+        else:
+            return HttpResponseRedirect("/teacher-home")
+
+    else:
+        return HttpResponseRedirect("/login")
+
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path("register/", include('register.urls')),
     path("", include('main.urls')),
     path('', include("django.contrib.auth.urls")),
+    path("", redirect1)
 ]

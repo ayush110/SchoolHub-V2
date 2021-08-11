@@ -1,22 +1,19 @@
 from django.shortcuts import render, HttpResponseRedirect
-from .forms import CreateSchool
 from .models import School
 
 # Create your views here.
 
 
 def createSchoolView(request):
-    if request.method == "POST":
-        form = CreateSchool(request.POST)
 
-        if form.is_valid():
-            name = form.cleaned_data["school_name"]
-            school = School(name=name)
+    if request.method == "POST":
+        name = request.POST.get('school_name')
+
+        if name != "" and name != None:
+
+            school = School.objects.create(name=name)
             school.save()
 
-            return HttpResponseRedirect("/login")
+            return HttpResponseRedirect("/register/teacher-sign-up")
 
-    else:
-        form = CreateSchool()
-
-    return render(request, "create_school.html", {"form": form})
+    return render(request, "create_school_test.html", {})
