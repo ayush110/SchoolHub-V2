@@ -71,7 +71,7 @@ def teacher_school_event(request):
         if "create_event" in request.POST:
             return HttpResponseRedirect('/school-create-event')
 
-        for event in school.event_set.all():
+        for event in school.events_set.all():
             if str(event.id) in request.POST:
                 return HttpResponseRedirect('/school-zoom-in-event/' + str(event.id))
 

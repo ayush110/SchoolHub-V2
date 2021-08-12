@@ -14,19 +14,16 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.contrib import admin
-from django.urls import path, include
-from django.shortcuts import render, HttpResponseRedirect
-
-
-def redirect1(request, w="", w2=""):
-    return HttpResponseRedirect("/login")
+from django.urls import path
+from . import view_student
 
 
 urlpatterns = [
-    path('admin/', admin.site.urls),
-    path("register/", include('register.urls')),
-    path("", include('main.urls')),
-    path("", include('student.urls')),
-    path('', include("django.contrib.auth.urls")),
-    path("", redirect1)
+    path("student-home", view_student.student_home, name="student-home"),
+    path("student-school-zoom-in-announcement/<int:id>",
+         view_student.student_school_zoom_in_announcement, name="student-school-zoom-in-announcement"),
+    path("student-school-event", view_student.student_school_event,
+         name="student-school-event"),
+    path("student-school-zoom-in-event/<int:id>",
+         view_student.student_school_event_zoom_in, name="student-school-zoom-in-event")
 ]

@@ -39,6 +39,14 @@
             window.location.replace(domain + "/teacher-home");
         }
 
+        function student_event_page() {
+            window.location.replace(domain + "/student-school-event");
+        }
+
+        function student_announcement_page() {
+            window.location.replace(domain + "/student-home");
+        }
+
 
     </script>
 
@@ -47,20 +55,18 @@
 
 <body>
 
-    <button onClick="teacher_event_page()">Events</button>
-    <button onClick="teacher_announcement_page()">Announcements</button>
+    <button onClick="student_event_page()">Events</button>
+    <button onClick="student_announcement_page()">Announcements</button>
 
     <form method="POST">
 
         {% csrf_token %}
 
-        <button name="create_event" type="submit">Create Event</button>
-
         {% for event in school.events_set.all %}
 
-        <h1>{{event.event_title}}</h1>
-        <h4>{{event.event_content}} • {{event.event_date}}</h4>
-        <button name="{{event.id}}" type="submit">View</button>
+            <h1>{{event.event_title}}</h1>
+            <h4>{{event.event_content}} • {{event.event_date}}</h4>
+            <button name="{{event.id}}" type="submit">View</button>
 
         {% endfor %}
 
