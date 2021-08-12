@@ -31,6 +31,11 @@
             window.location.replace(domain + "/teacher-home");
         }
 
+        function redirect_to_student_home_page() {
+            window.location.replace(domain + "/student-home");
+
+        }
+
         function teacher_event_page() {
             window.location.replace(domain + "/teacher-school-event");
         }
@@ -42,7 +47,7 @@
 
     </script>
 
-    
+
 </head>
 
 <body>
@@ -54,18 +59,15 @@
 
         {% csrf_token %}
 
-        <button name="create_announcement" type="submit">Create Announcement</button>
+        <button name="back" type="submit">Back</button>
 
-        {% for announcement in school.announcements_set.all %}
-
-            <h1>{{announcement.announcement_title}}</h1>
-            <h4>{{announcement.announcement_content}}</h4>
-            <button name="{{announcement.id}}" type="submit">View</button>
-
-        {% endfor %}
+        <h1>{{event.event_title}}</h1>
+        <h4>{{event.event_content}}</h4>
+        <h4>{{event.event_date}}</h4>
+        <button name="{{event.id}}" type="submit">Delete</button>
 
     </form>
-    
+
 
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"
         integrity="sha384-IQsoLXl5PILFhosVNubq5LC7Qb9DXgDA9i+tQ8Zj3iwWAwPtgFTxbJ8NT4GN1R8p"

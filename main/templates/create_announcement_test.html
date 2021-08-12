@@ -36,8 +36,12 @@
 
         }
 
-        function zoom_in_announcement_teacher_home() {
-
+        function teacher_event_page() {
+            window.location.replace(domain + "/teacher-school-event");
+        }
+        
+        function teacher_announcement_page() {
+            window.location.replace(domain + "/teacher-home");
         }
 
     </script>
@@ -46,6 +50,8 @@
 </head>
 
 <body>
+    <button onClick="teacher_event_page()">Events</button>
+    <button onClick="teacher_announcement_page()">Announcements</button>
     <form method="POST">
 
         {% csrf_token %}

@@ -17,16 +17,25 @@ from django.contrib import admin
 from django.urls import path
 from . import view_create_school
 from . import view_teacher
-from . import view_delete_announcement
+from . import view_delete
 
 
 urlpatterns = [
     path("create-school", view_create_school.createSchoolView, name="create-school"),
     path("teacher-home", view_teacher.teacher_home, name="teacher-home"),
-    path("school-delete-announcement/<int:id>", view_delete_announcement.school_delete_announcement,
+    path("school-delete-announcement/<int:id>", view_delete.school_delete_announcement,
          name="school-delete-announcement"),
     path("school-zoom-in-announcement/<int:id>", view_teacher.school_announcement_zoom_in,
          name="school-zoom-in-announcement"),
     path("school-create-announcement", view_teacher.school_create_announcement,
          name="school-create-announcement"),
+    path("school-delete-event/<int:id>", view_delete.school_delete_event,
+         name="school-delete-event"),
+    path("teacher-school-event", view_teacher.teacher_school_event,
+         name="teacher-school-event"),
+    path("school-zoom-in-event/<int:id>", view_teacher.school_event_zoom_in,
+         name="school-zoom-in-event"),
+    path("school-create-event", view_teacher.school_create_event,
+         name="school-create-event"),
+
 ]

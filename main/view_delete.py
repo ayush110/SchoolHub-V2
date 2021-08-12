@@ -1,5 +1,5 @@
 from django.shortcuts import render, HttpResponseRedirect
-from .models import School, Announcements
+from .models import School, Announcements, Events
 from register.decorators import teacher_required
 
 
@@ -10,3 +10,12 @@ def school_delete_announcement(request, id):
     a.delete()
 
     return HttpResponseRedirect('/teacher-home')
+
+
+@teacher_required
+def school_delete_event(request, id):
+
+    e = Events.objects.filter(id=id)
+    e.delete()
+
+    return HttpResponseRedirect('/teacher-school-event')

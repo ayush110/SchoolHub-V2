@@ -1,5 +1,5 @@
 from django.shortcuts import render, HttpResponseRedirect
-from .models import Announcements, School
+from .models import Announcements, School, Events
 from register.decorators import teacher_required
 
 
@@ -59,3 +59,60 @@ def school_create_announcement(request):
             return HttpResponseRedirect('/teacher-home')
 
     return render(request, "create_announcement_test.html", {"school": school})
+
+
+@teacher_required
+def teacher_school_event(request):
+    user = request.user
+    school = user.school
+
+    if request.method == 'POST':
+
+        if "create_event" in request.POST:
+            return HttpResponseRedirect('/school-create-event')
+
+        for event in school.event_set.all():
+            if str(event.id) in request.POST:
+                return HttpResponseRedirect('/school-zoom-in-event/' + str(event.id))
+
+    return render(request, "teacher_school_event_test.html", {"user": user, "school": school})
+
+
+@teacher_required
+def school_create_event(request):
+    user = request.user
+    school = user.school
+
+    if request.method == 'POST':
+        if 'back' in request.POST:
+            return HttpResponseRedirect('/teacher-school-event')
+
+        elif 'create' in request.POST:
+            title = request.POST.get('title')
+            description = request.POST.get('description')
+            date = request.POST.get('date')
+
+            school.events_set.create(
+                event_title=title, event_content=description, event_date=date)
+
+            return HttpResponseRedirect('/teacher-school-event')
+
+    return render(request, "create_event_test.html", {"user": user, "school": school})
+
+
+@teacher_required
+def school_event_zoom_in(request, id):
+    user = request.user
+    school = user.school
+
+    if request.method == 'POST':
+        if 'back' in request.POST:
+            return HttpResponseRedirect('/teacher-school-event')
+
+        elif str(id) in request.POST:
+            return HttpResponseRedirect('/school-delete-event/' + str(id))
+
+    event = Events.objects.filter(id=id)
+    event = event[0]
+
+    return render(request, "teacher_event_zoom_in_test.html", {"school": school, "user": user, "event": event})
