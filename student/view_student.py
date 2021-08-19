@@ -1,5 +1,5 @@
 from django.shortcuts import render, HttpResponseRedirect
-from main.models import Announcements, School, Events
+from register.models import Announcements, School, Events
 from register.decorators import student_required
 
 

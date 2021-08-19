@@ -2,7 +2,7 @@ from .models import User
 from django import forms
 from django.contrib.auth.forms import UserCreationForm
 from django.db import transaction
-from main.models import School
+from .models import School
 
 from .models import User
 

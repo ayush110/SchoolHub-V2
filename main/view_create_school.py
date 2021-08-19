@@ -1,5 +1,5 @@
 from django.shortcuts import render, HttpResponseRedirect
-from .models import School
+from register.models import School
 
 # Create your views here.
 
