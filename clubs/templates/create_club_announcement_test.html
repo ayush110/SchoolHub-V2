@@ -48,27 +48,25 @@
             window.location.replace(domain + "/teacher-clubs");
         }
 
-
     </script>
 
 
 </head>
 
 <body>
-
-    <button onClick="teacher_event_page()">Events</button>
-    <button onClick="teacher_announcement_page()">Announcements</button>
-    <button onClick="teacher_club_page()">Clubs</button>
-
     <form method="POST">
 
         {% csrf_token %}
 
         <button name="back" type="submit">Back</button>
 
-        <h1>{{announcement.announcement_title}}</h1>
-        <h4>{{announcement.announcement_content}}</h4>
-        <button name="{{announcement.id}}" type="submit">Delete</button>
+        <label>Announcement Title: </label>
+        <input type="text" name="title" />
+
+        <label>Announcement Description: </label>
+        <input type="text" name="description" />
+
+        <button name="create" type="submit">Create</button>
 
     </form>
 

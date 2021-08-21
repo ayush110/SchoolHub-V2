@@ -1,6 +1,7 @@
 from django.shortcuts import render, HttpResponseRedirect
 from register.models import School, Announcements, Events
 from register.decorators import teacher_required
+from django.contrib.auth.decorators import login_required
 
 
 @teacher_required

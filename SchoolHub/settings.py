@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     'widget_tweaks',
     'main.apps.MainConfig',
     'student.apps.StudentConfig',
+    'clubs.apps.ClubsConfig',
 ]
 
 AUTH_USER_MODEL = "register.User"

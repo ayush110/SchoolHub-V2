@@ -39,6 +39,10 @@
             window.location.replace(domain + "/teacher-home");
         }
 
+        function teacher_club_page() {
+            window.location.replace(domain + "/teacher-clubs");
+        }
+
 
     </script>
 
@@ -49,6 +53,7 @@
 
     <button onClick="teacher_event_page()">Events</button>
     <button onClick="teacher_announcement_page()">Announcements</button>
+    <button onClick="teacher_club_page()">Clubs</button>
 
     <form method="POST">
 
@@ -56,7 +61,7 @@
 
         <button name="create_announcement" type="submit">Create Announcement</button>
 
-        {% for announcement in school.announcements_set.all %}
+        {% for announcement in announcements %}
 
             <h1>{{announcement.announcement_title}}</h1>
             <h4>{{announcement.announcement_content}}</h4>

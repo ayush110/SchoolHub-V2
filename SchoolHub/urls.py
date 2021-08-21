@@ -27,6 +27,7 @@ urlpatterns = [
     path("register/", include('register.urls')),
     path("", include('main.urls')),
     path("", include('student.urls')),
+    path("", include('clubs.urls')),
     path('', include("django.contrib.auth.urls")),
     path("", redirect1)
 ]

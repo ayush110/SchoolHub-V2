@@ -25,6 +25,7 @@ class User(AbstractUser):
 
 class Club(models.Model):
     name = models.CharField(max_length=255)
+    description = models.TextField(null=True)
     school = models.ForeignKey(School, on_delete=models.CASCADE)
     passcode = models.CharField(
         default=generate_random_passcode, max_length=30)
@@ -38,6 +39,7 @@ class isPresident(models.Model):
     club = models.ForeignKey(Club, on_delete=models.CASCADE)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     isPresident = models.BooleanField(default=False)
+    isCreater = models.BooleanField(default=False)
 
 
 class Announcements(models.Model):

@@ -44,6 +44,10 @@
             window.location.replace(domain + "/teacher-home");
         }
 
+        function teacher_club_page() {
+            window.location.replace(domain + "/teacher-clubs");
+        }
+
     </script>
 
 
@@ -52,6 +56,7 @@
 <body>
     <button onClick="teacher_event_page()">Events</button>
     <button onClick="teacher_announcement_page()">Announcements</button>
+    <button onClick="teacher_club_page()">Clubs</button>
     <form method="POST">
 
         {% csrf_token %}

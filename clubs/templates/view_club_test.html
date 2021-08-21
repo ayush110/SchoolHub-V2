@@ -31,21 +31,12 @@
             window.location.replace(domain + "/teacher-home");
         }
 
-        function redirect_to_student_home_page() {
-            window.location.replace(domain + "/student-home");
-
-        }
-
         function teacher_event_page() {
             window.location.replace(domain + "/teacher-school-event");
         }
 
         function teacher_announcement_page() {
             window.location.replace(domain + "/teacher-home");
-        }
-
-        function teacher_club_page() {
-            window.location.replace(domain + "/teacher-clubs");
         }
 
 
@@ -56,19 +47,43 @@
 
 <body>
 
-    <button onClick="teacher_event_page()">Events</button>
-    <button onClick="teacher_announcement_page()">Announcements</button>
-    <button onClick="teacher_club_page()">Clubs</button>
-
     <form method="POST">
 
         {% csrf_token %}
 
-        <button name="back" type="submit">Back</button>
+        <button name="back" type="submit">Back</button> <br> <h2>{{club.name}}</h2> <br> <h5>Passcode: {{passcode}}</h5>
+
+        <button name="create_announcement" type="submit">Create Announcement</button>
+
+        <br> <br>
+        <h4>Announcements</h4>
+        {% for announcement in announcements %}
 
         <h1>{{announcement.announcement_title}}</h1>
         <h4>{{announcement.announcement_content}}</h4>
-        <button name="{{announcement.id}}" type="submit">Delete</button>
+        <button name="a{{announcement.id}}" type="submit">View</button>
+
+        {% endfor %}
+
+        <br> <br>
+        <button name="create_event" type="submit">Create Event</button>
+
+        <h4>Events</h4>
+        {% for event in events %}
+        
+        <h1>{{event.event_title}}</h1>
+        <h4>{{event.event_content}} • {{event.event_date}}</h4>
+        <button name="e{{event.id}}" type="submit">View</button>
+        
+        {% endfor %}
+
+        <br> <br>
+        <h4>Members</h4>
+        {% for member in member %}
+        
+        <h1>{{member.username}} <!-- • {{member.isPresident}} --></h1>
+        
+        {% endfor %}
 
     </form>
 

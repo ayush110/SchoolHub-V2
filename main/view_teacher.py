@@ -1,8 +1,10 @@
 from django.shortcuts import render, HttpResponseRedirect
 from register.models import Announcements, School, Events
 from register.decorators import teacher_required
+from django.contrib.auth.decorators import login_required
 
 
+@login_required
 @teacher_required
 def teacher_home(request):
     user = request.user
@@ -19,9 +21,12 @@ def teacher_home(request):
 
     # make a limit on the size of the announcement
 
-    return render(request, "teacher_home_test.html", {"user": user, "school": school})
+    announcements = reversed(school.announcements_set.all())
+
+    return render(request, "teacher_home_test.html", {"user": user, "school": school, "announcements": announcements})
 
 
+@login_required
 @teacher_required
 def school_announcement_zoom_in(request, id):
     user = request.user
@@ -40,6 +45,7 @@ def school_announcement_zoom_in(request, id):
     return render(request, "teacher_announcement_zoom_in_test.html", {"school": school, "announcement": announcement})
 
 
+@login_required
 @teacher_required
 def school_create_announcement(request):
     user = request.user
@@ -61,6 +67,7 @@ def school_create_announcement(request):
     return render(request, "create_announcement_test.html", {"school": school})
 
 
+@login_required
 @teacher_required
 def teacher_school_event(request):
     user = request.user
@@ -75,9 +82,12 @@ def teacher_school_event(request):
             if str(event.id) in request.POST:
                 return HttpResponseRedirect('/school-zoom-in-event/' + str(event.id))
 
-    return render(request, "teacher_school_event_test.html", {"user": user, "school": school})
+    events = reversed(school.events_set.all())
+
+    return render(request, "teacher_school_event_test.html", {"user": user, "school": school, "events": events})
 
 
+@login_required
 @teacher_required
 def school_create_event(request):
     user = request.user
@@ -100,6 +110,7 @@ def school_create_event(request):
     return render(request, "create_event_test.html", {"user": user, "school": school})
 
 
+@login_required
 @teacher_required
 def school_event_zoom_in(request, id):
     user = request.user

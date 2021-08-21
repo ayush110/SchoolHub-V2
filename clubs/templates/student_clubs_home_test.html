@@ -44,10 +44,13 @@
             window.location.replace(domain + "/teacher-home");
         }
 
-        function teacher_club_page() {
-            window.location.replace(domain + "/teacher-clubs");
+        function student_event_page() {
+            window.location.replace(domain + "/student-school-event");
         }
 
+        function student_clubs_page() {
+            window.location.replace(domain + "/student-clubs");
+        }
 
     </script>
 
@@ -55,20 +58,29 @@
 </head>
 
 <body>
-
-    <button onClick="teacher_event_page()">Events</button>
-    <button onClick="teacher_announcement_page()">Announcements</button>
-    <button onClick="teacher_club_page()">Clubs</button>
-
+    <button onClick="student_event_page()">Events</button>
+    <button onClick="redirect_to_student_home_page()">Announcements</button>
+    <button onClick="student_clubs_page()">Clubs</button>
     <form method="POST">
 
         {% csrf_token %}
 
-        <button name="back" type="submit">Back</button>
+        <button name="yourClubs" type="submit">Your Clubs</button>
+        <button name="otherClubs" type="submit">Other Clubs</button> <br>
 
-        <h1>{{announcement.announcement_title}}</h1>
-        <h4>{{announcement.announcement_content}}</h4>
-        <button name="{{announcement.id}}" type="submit">Delete</button>
+
+        {% for club in clubs %}
+
+        <h1>{{club.title}}</h1>
+        <h4>{{club.description}}</h4>
+
+        {% if yourClubs2 %}
+        <button name="view{{club.id}}" type="submit">View</button>
+        {% else %}
+        <button name="join{{club.id}}" type="submit">Join</button>
+        {% endif %}
+
+        {% endfor %}
 
     </form>
 
