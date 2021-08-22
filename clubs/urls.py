@@ -18,6 +18,7 @@ from django.urls import path
 from . import view_student_clubs
 from . import view_clubs
 from . import view_delete
+from . import view_president_clubs
 
 
 urlpatterns = [
@@ -37,11 +38,30 @@ urlpatterns = [
          view_delete.school_delete_announcement, name="teacher-club-announcement-zoom-in"),
     path('delete-club-event/<int:id>/<int:event_id>',
          view_delete.school_delete_event, name="teacher-club-event-zoom-in"),
+    path('member-list/<int:id>', view_clubs.member_list,
+         name="member-list"),
 
     path('student-clubs', view_student_clubs.student_clubs_home, name="student-clubs"),
     path('student-view-club/<int:id>', view_student_clubs.student_view_club,
          name="student-view-club"),
     path('student-join-club/<int:id>', view_student_clubs.join_club,
          name="student-join-club"),
+    path('student-member-list/<int:id>', view_student_clubs.member_list,
+         name="student-member-list"),
 
+
+    path('president-view-club/<int:id>', view_president_clubs.president_view_club,
+         name="president-view-club"),
+    path('create-club-announcement-pres/<int:id>',
+         view_president_clubs.create_club_announcement_pres, name="create-club-announcement-pres"),
+    path('create-club-event-pres/<int:id>',
+         view_president_clubs.create_club_event_pres, name="create-club-event-pres"),
+    path('delete-club-announcement-pres/<int:id>/<int:announcement_id>',
+         view_delete.school_delete_announcement_pres, name="delete-club-announcement-pres"),
+    path('delete-club-event-pres/<int:id>/<int:event_id>',
+         view_delete.school_delete_event_pres, name="delete-club-event-pres"),
+    path('pres-club-event-zoom-in/<int:id>/<int:event_id>',
+         view_president_clubs.president_club_event_zoom_in, name="pres-club-event-zoom-in"),
+    path('pres-club-announcement-zoom-in/<int:id>/<int:announcement_id>',
+         view_president_clubs.president_club_announcement_zoom_in, name="pres-club-announcement-zoom-in"),
 ]

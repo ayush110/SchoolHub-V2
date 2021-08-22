@@ -1,5 +1,5 @@
 from django.shortcuts import render, HttpResponseRedirect
-from register.models import Announcements, Club
+from register.models import Announcements, Club, Member
 from register.decorators import teacher_required
 from django.contrib.auth.decorators import login_required
 from . import user_in_club
@@ -83,11 +83,11 @@ def teacher_clubs(request):
 @teacher_required
 def teacher_view_club(request, id):
 
-    if not user_in_club.teacher_in_club(id):
-        return HttpResponseRedirect('/teacher-clubs')
-
     user = request.user
     school = user.school
+
+    if not user_in_club.teacher_in_club(user, id):
+        return HttpResponseRedirect('/teacher-clubs')
     club = Club.objects.get(id=id)
 
     if request.method == 'POST':
@@ -101,6 +101,9 @@ def teacher_view_club(request, id):
         elif 'create_event' in request.POST:
             return HttpResponseRedirect(f'/create-club-event/{id}')
 
+        elif 'member_list' in request.POST:
+            return HttpResponseRedirect(f'/member-list/{id}')
+
         else:
             for event in club.events_set.all():
                 if f'e{event.id}' in request.POST:
@@ -112,7 +115,7 @@ def teacher_view_club(request, id):
 
     announcements = club.announcements_set.all()
     events = club.events_set.all()
-    members = club.members.all()
+    members = Member.objects.filter(club=club)
 
     if len(announcements) > 8:
         announcements = announcements[:8]
@@ -129,10 +132,10 @@ def teacher_view_club(request, id):
 @login_required
 @teacher_required
 def teacher_club_event_zoom_in(request, id, event_id):
-    if not user_in_club.teacher_in_club(id):
-        return HttpResponseRedirect('/teacher-clubs')
     user = request.user
     school = user.school
+    if not user_in_club.teacher_in_club(user, id):
+        return HttpResponseRedirect('/teacher-clubs')
     club = Club.objects.get(id=id)
 
     if request.method == 'POST':
@@ -150,10 +153,10 @@ def teacher_club_event_zoom_in(request, id, event_id):
 @login_required
 @teacher_required
 def teacher_club_announcement_zoom_in(request, id, announcement_id):
-    if not user_in_club.teacher_in_club(id):
-        return HttpResponseRedirect('/teacher-clubs')
     user = request.user
     school = user.school
+    if not user_in_club.teacher_in_club(user, id):
+        return HttpResponseRedirect('/teacher-clubs')
     club = Club.objects.get(id=id)
 
     if request.method == 'POST':
@@ -171,10 +174,10 @@ def teacher_club_announcement_zoom_in(request, id, announcement_id):
 @login_required
 @teacher_required
 def create_club_announcement(request, id):
-    if not user_in_club.teacher_in_club(id):
-        return HttpResponseRedirect('/teacher-clubs')
     user = request.user
     school = user.school
+    if not user_in_club.teacher_in_club(user, id):
+        return HttpResponseRedirect('/teacher-clubs')
     club = Club.objects.get(id=id)
 
     if request.method == 'POST':
@@ -196,10 +199,10 @@ def create_club_announcement(request, id):
 @login_required
 @teacher_required
 def create_club_event(request, id):
-    if not user_in_club.teacher_in_club(id):
-        return HttpResponseRedirect('/teacher-clubs')
     user = request.user
     school = user.school
+    if not user_in_club.teacher_in_club(user, id):
+        return HttpResponseRedirect('/teacher-clubs')
     club = Club.objects.get(id=id)
 
     if request.method == 'POST':
@@ -217,3 +220,36 @@ def create_club_event(request, id):
             return HttpResponseRedirect(f'/teacher-view-club/{club.id}')
 
     return render(request, "create_club_event_test.html", {"user": user, "school": school, "club": club})
+
+
+@login_required
+@teacher_required
+def member_list(request, id):
+    user = request.user
+    school = user.school
+    if not user_in_club.teacher_in_club(user, id):
+        return HttpResponseRedirect('/teacher-clubs')
+
+    club = Club.objects.get(id=id)
+    members = Member.objects.filter(club=club)
+
+    if request.method == 'POST':
+
+        if 'back' in request.POST:
+            return HttpResponseRedirect(f'/teacher-view-club/{id}')
+
+        for member in members:
+            if f'makeMember{member.id}' in request.POST:
+                Member.objects.update_or_create(
+                    id=member.id, defaults={'isPresident': False})
+                break
+            elif f'makePresident{member.id}' in request.POST:
+                Member.objects.update_or_create(
+                    id=member.id, defaults={'isPresident': True})
+                break
+
+        return HttpResponseRedirect(f'/teacher-view-club/{id}')
+
+    #members = club.members.all()
+
+    return render(request, 'teacher_member_list_test.html', {"user": user, "school": school, "club": club, "members": members})

@@ -1,5 +1,5 @@
 from django.shortcuts import render, HttpResponseRedirect
-from register.models import Announcements, Club
+from register.models import Announcements, Club, Member
 from register.decorators import student_required
 from django.contrib.auth.decorators import login_required
 from . import user_in_club
@@ -47,18 +47,26 @@ def student_clubs_home(request):
 @login_required
 @student_required
 def student_view_club(request, id):
-
-    if not user_in_club.student_in_club(id):
-        return HttpResponseRedirect('/student-clubs')
-
     user = request.user
     school = user.school
+
+    if not user_in_club.student_in_club(user, id):
+        return HttpResponseRedirect('/student-clubs')
+
     club = Club.objects.get(id=id)
+
+    member = Member.objects.filter(club=club, user=user)[0]
+    if member.isPresident:
+        print(id, end="\n\n\n")
+        return HttpResponseRedirect(f'/president-view-club/{id}')
 
     if request.method == 'POST':
 
         if 'back' in request.POST:
             return HttpResponseRedirect('/student-clubs')
+
+        elif 'member_list' in request.POST:
+            return HttpResponseRedirect(f'/student-member-list/{id}')
 
         """else:
             for event in club.events_set.all():
@@ -71,7 +79,7 @@ def student_view_club(request, id):
 
     announcements = club.announcements_set.all()
     events = club.events_set.all()
-    members = club.members.all()
+    members = Member.objects.filter(club=club)
 
     if len(announcements) > 8:
         announcements = announcements[:8]
@@ -83,21 +91,44 @@ def student_view_club(request, id):
     return render(request, 'student_view_club_test.html', {"user": user, "school": school, "announcements": announcements, "events": events, "members": members})
 
 
+@login_required
+@student_required
 def join_club(request, id):
     user = request.user
     school = user.school
+    club = Club.objects.get(id=id)
 
     if request.method == 'POST':
         if 'back' in request.POST:
             return HttpResponseRedirect('/student-clubs')
 
         passcode = request.POST.get('passcode')
-        club = Club.objects.get(id=id)
 
         if club.passcode == passcode:
             club.members.add(user, through_defaults={})
             return HttpResponseRedirect(f'/student-view-club/{club.id}')
         else:
-            return render(request, 'student_join_club.html', {"user": user, "school": school, "error": True})
+            return render(request, 'student_join_club.html', {"user": user, "school": school, "error": True, "club": club})
 
-    return render(request, 'student_join_club.html', {"user": user, "school": school, "error": False})
+    return render(request, 'student_join_club.html', {"user": user, "school": school, "error": False, "club": club})
+
+
+@login_required
+@student_required
+def member_list(request, id):
+    user = request.user
+    school = user.school
+    if not user_in_club.student_in_club(user, id):
+        return HttpResponseRedirect('/student-clubs')
+
+    club = Club.objects.get(id=id)
+    members = Member.objects.filter(club=club)
+
+    if request.method == 'POST':
+
+        if 'back' in request.POST:
+            return HttpResponseRedirect(f'/student-view-club/{id}')
+
+    #members = club.members.all()
+
+    return render(request, 'student_member_list_test.html', {"user": user, "school": school, "club": club, "members": members})

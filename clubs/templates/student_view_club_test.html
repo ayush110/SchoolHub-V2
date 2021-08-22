@@ -78,11 +78,15 @@
 
         <br> <br>
         <h4>Members</h4>
-        {% for member in member %}
+        {% for member in members %}
 
-        <h1>{{member.username}}
-            <!-- • {{member.isPresident}} -->
-        </h1>
+        {% if member.isCreator %}
+            <h1>{{member.user}} • Teacher</h1>
+        {% elif member.isPresident %}
+            <h1>{{member.user}} • President</h1>
+        {% else %}
+            <h1>{{member.user}} • Member</h1>
+        {% endif %}
 
         {% endfor %}
 

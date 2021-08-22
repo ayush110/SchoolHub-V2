@@ -29,17 +29,17 @@ class Club(models.Model):
     school = models.ForeignKey(School, on_delete=models.CASCADE)
     passcode = models.CharField(
         default=generate_random_passcode, max_length=30)
-    members = models.ManyToManyField(User, through='isPresident')
+    members = models.ManyToManyField(User, through='Member')
 
     def __str__(self):
         return self.name
 
 
-class isPresident(models.Model):
+class Member(models.Model):
     club = models.ForeignKey(Club, on_delete=models.CASCADE)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     isPresident = models.BooleanField(default=False)
-    isCreater = models.BooleanField(default=False)
+    isCreator = models.BooleanField(default=False)
 
 
 class Announcements(models.Model):
