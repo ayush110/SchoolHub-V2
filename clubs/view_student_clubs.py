@@ -2,6 +2,7 @@ from django.shortcuts import render, HttpResponseRedirect
 from register.models import Announcements, Club
 from register.decorators import student_required
 from django.contrib.auth.decorators import login_required
+from . import user_in_club
 
 
 @login_required
@@ -46,6 +47,10 @@ def student_clubs_home(request):
 @login_required
 @student_required
 def student_view_club(request, id):
+
+    if not user_in_club.student_in_club(id):
+        return HttpResponseRedirect('/student-clubs')
+
     user = request.user
     school = user.school
     club = Club.objects.get(id=id)

@@ -2,6 +2,7 @@ from django.shortcuts import render, HttpResponseRedirect
 from register.models import Announcements, Club
 from register.decorators import teacher_required
 from django.contrib.auth.decorators import login_required
+from . import user_in_club
 
 # Create your views here.
 
@@ -81,6 +82,10 @@ def teacher_clubs(request):
 @login_required
 @teacher_required
 def teacher_view_club(request, id):
+
+    if not user_in_club.teacher_in_club(id):
+        return HttpResponseRedirect('/teacher-clubs')
+
     user = request.user
     school = user.school
     club = Club.objects.get(id=id)
@@ -124,6 +129,8 @@ def teacher_view_club(request, id):
 @login_required
 @teacher_required
 def teacher_club_event_zoom_in(request, id, event_id):
+    if not user_in_club.teacher_in_club(id):
+        return HttpResponseRedirect('/teacher-clubs')
     user = request.user
     school = user.school
     club = Club.objects.get(id=id)
@@ -143,6 +150,8 @@ def teacher_club_event_zoom_in(request, id, event_id):
 @login_required
 @teacher_required
 def teacher_club_announcement_zoom_in(request, id, announcement_id):
+    if not user_in_club.teacher_in_club(id):
+        return HttpResponseRedirect('/teacher-clubs')
     user = request.user
     school = user.school
     club = Club.objects.get(id=id)
@@ -162,6 +171,8 @@ def teacher_club_announcement_zoom_in(request, id, announcement_id):
 @login_required
 @teacher_required
 def create_club_announcement(request, id):
+    if not user_in_club.teacher_in_club(id):
+        return HttpResponseRedirect('/teacher-clubs')
     user = request.user
     school = user.school
     club = Club.objects.get(id=id)
@@ -185,6 +196,8 @@ def create_club_announcement(request, id):
 @login_required
 @teacher_required
 def create_club_event(request, id):
+    if not user_in_club.teacher_in_club(id):
+        return HttpResponseRedirect('/teacher-clubs')
     user = request.user
     school = user.school
     club = Club.objects.get(id=id)
