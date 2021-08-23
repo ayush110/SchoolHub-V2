@@ -1,5 +1,5 @@
 from django.shortcuts import render, HttpResponseRedirect
-from register.models import Announcements, Club, Member
+from register.models import Announcements, Club, Member, Events
 from register.decorators import student_required
 from django.contrib.auth.decorators import login_required
 from . import user_in_club
@@ -68,14 +68,14 @@ def student_view_club(request, id):
         elif 'member_list' in request.POST:
             return HttpResponseRedirect(f'/student-member-list/{id}')
 
-        """else:
+        else:
             for event in club.events_set.all():
                 if f'e{event.id}' in request.POST:
                     return HttpResponseRedirect(f'/student-club-event-zoom-in/{club.id}/{event.id}')
 
             for announcement in club.announcements_set.all():
                 if f'a{announcement.id}' in request.POST:
-                    return HttpResponseRedirect(f'/student-club-announcement-zoom-in/{club.id}/{announcement.id}')"""
+                    return HttpResponseRedirect(f'/student-club-announcement-zoom-in/{club.id}/{announcement.id}')
 
     announcements = club.announcements_set.all()
     events = club.events_set.all()
@@ -132,3 +132,33 @@ def member_list(request, id):
     #members = club.members.all()
 
     return render(request, 'student_member_list_test.html', {"user": user, "school": school, "club": club, "members": members})
+
+
+@student_required
+def student_school_zoom_in_announcement(request, id, ann_id):
+    user = request.user
+    school = user.school
+
+    if request.method == 'POST':
+        if 'back' in request.POST:
+            return HttpResponseRedirect(f'/student-view-club/{id}')
+
+    announcement = Announcements.objects.filter(id=ann_id)
+    announcement = announcement[0]
+
+    return render(request, "student_ann_club_zoom_in.html", {"user": user, "school": school, "announcement": announcement})
+
+
+@student_required
+def student_school_zoom_in_event(request, id, event_id):
+    user = request.user
+    school = user.school
+
+    if request.method == 'POST':
+        if 'back' in request.POST:
+            return HttpResponseRedirect(f'/student-view-club/{id}')
+
+    event = Events.objects.filter(id=event_id)
+    event = event[0]
+
+    return render(request, "student_event_club_zoom_in.html", {"user": user, "school": school, "event": event})

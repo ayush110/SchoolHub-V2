@@ -18,7 +18,12 @@ from django.urls import path, include
 from django.shortcuts import render, HttpResponseRedirect
 
 
-def redirect1(request, w="", w2=""):
+def redirect1(request):
+    if request.user.is_authenticated:
+        if request.user.is_teacher:
+            return HttpResponseRedirect("/teacher-home")
+        if request.user.is_student:
+            return HttpResponseRedirect("/student-home")
     return HttpResponseRedirect("/login")
 
 

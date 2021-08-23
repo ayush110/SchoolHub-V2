@@ -50,6 +50,10 @@ urlpatterns = [
          name="student-join-club"),
     path('student-member-list/<int:id>', view_student_clubs.member_list,
          name="student-member-list"),
+    path('student-club-event-zoom-in/<int:id>/<int:event_id>',
+         view_student_clubs.student_school_zoom_in_event, name="student-club-event-zoom-in"),
+    path('student-club-announcement-zoom-in/<int:id>/<int:ann_id>',
+         view_student_clubs.student_school_zoom_in_announcement, name="student-club-announcement-zoom-in"),
 
 
     path('president-view-club/<int:id>', view_president_clubs.president_view_club,
