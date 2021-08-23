@@ -52,28 +52,15 @@
         {% csrf_token %}
 
         <button name="back" type="submit">Back</button> <br>
-        
-            {% for member in members %}
 
-            {% if member.isOwner %}
-                <h1>{{member.user}} • Creator</h1>
-            {% elif member.isCreator %}
-                <h1>{{member.user}} • Teacher</h1>
-            {% elif member.isPresident %}
-                <h1>{{member.user}} • President</h1>
-            {% else %}
-                <h1>{{member.user}} • Member</h1>
-            {% endif %}
+        <label>Passcode:</label>
+        <input type="text" name="passcode" />
 
+        {% if error %}
+        <h4 style="color: red;">You entered the wrong password. Please try again.</h4>
+        {% endif %}
 
-            {% if member.isPresident and not member.isCreator %}
-                <button type="submit" name="makeMember{{member.id}}">Make Member</button>
-            {% elif not member.isPresident and not member.isCreator %}
-                <button type="submit" name="makePresident{{member.id}}">Make President</button>
-            {% endif %}
-
-
-        {% endfor %}
+        <button type="submit">Join</button>
 
     </form>
 

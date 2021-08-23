@@ -40,6 +40,7 @@ class Member(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     isPresident = models.BooleanField(default=False)
     isCreator = models.BooleanField(default=False)
+    isOwner = models.BooleanField(default=False)
 
 
 class Announcements(models.Model):

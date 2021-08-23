@@ -29,7 +29,7 @@ def create_club(request):
                 name=name, description=description)
             club = school.club_set.filter(name=name)[0]
             club.members.add(user, through_defaults={
-                'isPresident': False, 'isCreater': True})
+                'isPresident': False, 'isCreator': True, 'isOwner': True})
 
             return HttpResponseRedirect('/teacher-clubs')
 
@@ -71,7 +71,7 @@ def teacher_clubs(request):
                 return HttpResponseRedirect(f'/teacher-view-club/{club.id}')
 
             elif f'join{club.id}' in request.POST:
-                pass
+                return HttpResponseRedirect(f'/join-club/{club.id}')
 
     else:
         clubs = yourClubs
@@ -253,3 +253,27 @@ def member_list(request, id):
     #members = club.members.all()
 
     return render(request, 'teacher_member_list_test.html', {"user": user, "school": school, "club": club, "members": members})
+
+
+@login_required
+@teacher_required
+def join_club(request, id):
+    user = request.user
+    school = user.school
+
+    club = Club.objects.get(id=id)
+
+    if request.method == 'POST':
+
+        if 'back' in request.POST:
+            return HttpResponseRedirect('/teacher-clubs')
+
+        passcode = request.POST.get('passcode')
+
+        if club.passcode == passcode:
+            club.members.add(user, through_defaults={'isCreator': True})
+            return HttpResponseRedirect(f'/teacher-view-club/{club.id}')
+        else:
+            return render(request, 'teacher_join_club_test.html', {"user": user, "school": school, "error": True, "club": club})
+
+    return render(request, 'teacher_join_club_test.html', {"user": user, "school": school, "error": False, "club": club})

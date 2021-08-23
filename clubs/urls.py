@@ -40,6 +40,8 @@ urlpatterns = [
          view_delete.school_delete_event, name="teacher-club-event-zoom-in"),
     path('member-list/<int:id>', view_clubs.member_list,
          name="member-list"),
+    path('join-club/<int:id>', view_clubs.join_club,
+         name="join-club"),
 
     path('student-clubs', view_student_clubs.student_clubs_home, name="student-clubs"),
     path('student-view-club/<int:id>', view_student_clubs.student_view_club,

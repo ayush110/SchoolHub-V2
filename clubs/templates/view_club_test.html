@@ -82,7 +82,9 @@
         <h4>Members</h4>
         {% for member in members %}
         
-        {% if member.isCreator %}
+        {% if member.isOwner %}
+            <h1>{{member.user}} • Creator</h1>
+        {% elif member.isCreator %}
             <h1>{{member.user}} • Teacher</h1>
         {% elif member.isPresident %}
             <h1>{{member.user}} • President</h1>

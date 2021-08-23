@@ -108,9 +108,9 @@ def join_club(request, id):
             club.members.add(user, through_defaults={})
             return HttpResponseRedirect(f'/student-view-club/{club.id}')
         else:
-            return render(request, 'student_join_club.html', {"user": user, "school": school, "error": True, "club": club})
+            return render(request, 'student_join_club_test.html', {"user": user, "school": school, "error": True, "club": club})
 
-    return render(request, 'student_join_club.html', {"user": user, "school": school, "error": False, "club": club})
+    return render(request, 'student_join_club_test.html', {"user": user, "school": school, "error": False, "club": club})
 
 
 @login_required
