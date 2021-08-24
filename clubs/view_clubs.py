@@ -3,6 +3,7 @@ from register.models import Announcements, Club, Member
 from register.decorators import teacher_required
 from django.contrib.auth.decorators import login_required
 from . import user_in_club
+from . import order_members
 
 # Create your views here.
 
@@ -122,12 +123,17 @@ def teacher_view_club(request, id):
     announcements = club.announcements_set.all()
     events = club.events_set.all()
 
+    members = order_members.members_list(members)
+
     if len(announcements) > 8:
         announcements = announcements[:8]
     if len(events) > 4:
         events = events[:4]
     if len(members) > 3:
         members = members[:3]
+
+    announcements = reversed(announcements)
+    events = reversed(events)
 
     passcode = club.passcode
 
@@ -256,6 +262,7 @@ def member_list(request, id):
         return HttpResponseRedirect(f'/teacher-view-club/{id}')
 
     #members = club.members.all()
+    members = order_members.members_list(members)
 
     return render(request, 'teacher_member_list_test.html', {"user": user, "school": school, "club": club, "members": members})
 

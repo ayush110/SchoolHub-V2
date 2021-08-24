@@ -42,6 +42,9 @@ class Member(models.Model):
     isCreator = models.BooleanField(default=False)
     isOwner = models.BooleanField(default=False)
 
+    def __str__(self):
+        return f"club: {self.club.name}  user: {self.user}"
+
 
 class Announcements(models.Model):
     announcement_title = models.CharField(max_length=200)

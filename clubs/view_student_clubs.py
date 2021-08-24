@@ -3,6 +3,7 @@ from register.models import Announcements, Club, Member, Events
 from register.decorators import student_required
 from django.contrib.auth.decorators import login_required
 from . import user_in_club
+from . import order_members
 
 
 @login_required
@@ -80,6 +81,7 @@ def student_view_club(request, id):
     announcements = club.announcements_set.all()
     events = club.events_set.all()
     members = Member.objects.filter(club=club)
+    members = order_members.members_list(members)
 
     if len(announcements) > 8:
         announcements = announcements[:8]
@@ -87,6 +89,9 @@ def student_view_club(request, id):
         events = events[:4]
     if len(members) > 3:
         members = members[:3]
+
+    announcements = reversed(announcements)
+    events = reversed(events)
 
     return render(request, 'student_view_club_test.html', {"user": user, "school": school, "announcements": announcements, "events": events, "members": members})
 
@@ -130,6 +135,7 @@ def member_list(request, id):
             return HttpResponseRedirect(f'/student-view-club/{id}')
 
     #members = club.members.all()
+    members = order_members.members_list(members)
 
     return render(request, 'student_member_list_test.html', {"user": user, "school": school, "club": club, "members": members})
 

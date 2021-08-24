@@ -3,6 +3,7 @@ from register.models import Announcements, Club, Member
 from register.decorators import student_required
 from django.contrib.auth.decorators import login_required
 from . import user_in_club
+from . import order_members
 
 
 @login_required
@@ -46,6 +47,7 @@ def president_view_club(request, id):
     announcements = club.announcements_set.all()
     events = club.events_set.all()
     members = Member.objects.filter(club=club)
+    members = order_members.members_list(members)
 
     if len(announcements) > 8:
         announcements = announcements[:8]
@@ -53,6 +55,9 @@ def president_view_club(request, id):
         events = events[:4]
     if len(members) > 3:
         members = members[:3]
+
+    announcements = reversed(announcements)
+    events = reversed(events)
 
     passcode = club.passcode
 

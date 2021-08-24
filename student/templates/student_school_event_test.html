@@ -67,7 +67,7 @@
 
         {% csrf_token %}
 
-        {% for event in school.events_set.all %}
+        {% for event in events %}
 
             <h1>{{event.event_title}}</h1>
             <h4>{{event.event_content}} • {{event.event_date}}</h4>

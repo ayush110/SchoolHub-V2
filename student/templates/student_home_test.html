@@ -67,7 +67,7 @@
 
         {% csrf_token %}
         
-        {% for announcement in school.announcements_set.all %}
+        {% for announcement in announcements %}
 
         <h1>{{announcement.announcement_title}}</h1>
         <h4>{{announcement.announcement_content}}</h4>
