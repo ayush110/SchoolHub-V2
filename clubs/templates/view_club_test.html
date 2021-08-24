@@ -39,6 +39,13 @@
             window.location.replace(domain + "/teacher-home");
         }
 
+        function delete_club() {
+            var val = confirm("Do you want to delete the club?");
+            if (val == true) {
+                document.getElementById("delete_club").click();
+            }
+        }
+
 
     </script>
 
@@ -51,7 +58,13 @@
 
         {% csrf_token %}
 
-        <button name="back" type="submit">Back</button> <br> <h2>{{club.name}}</h2> <br> <h5>Passcode: {{passcode}}</h5>
+        <button name="back" type="submit">Back</button> <br>
+        {% if member2.isOwner %}
+            <button type="button" onClick="delete_club()">Delete Club</button>
+            <br>
+            <button type="submit" name="delete_club" style="visibility: hidden;" id="delete_club">Delete Club</button>
+        {% endif %}
+        <h2>{{club.name}}</h2> <h5>{{club.description}}</h5> <br> <h5>Passcode: {{passcode}}</h5>
 
         <button name="create_announcement" type="submit">Create Announcement</button>
 

@@ -89,6 +89,8 @@ def teacher_view_club(request, id):
     if not user_in_club.teacher_in_club(user, id):
         return HttpResponseRedirect('/teacher-clubs')
     club = Club.objects.get(id=id)
+    members = Member.objects.filter(club=club)
+    member = members.filter(user=user)[0]
 
     if request.method == 'POST':
 
@@ -104,6 +106,10 @@ def teacher_view_club(request, id):
         elif 'member_list' in request.POST:
             return HttpResponseRedirect(f'/member-list/{id}')
 
+        elif member.isCreator and 'delete_club' in request.POST:
+            club.delete()
+            return HttpResponseRedirect('/teacher-clubs')
+
         else:
             for event in club.events_set.all():
                 if f'e{event.id}' in request.POST:
@@ -115,7 +121,6 @@ def teacher_view_club(request, id):
 
     announcements = club.announcements_set.all()
     events = club.events_set.all()
-    members = Member.objects.filter(club=club)
 
     if len(announcements) > 8:
         announcements = announcements[:8]
@@ -126,7 +131,7 @@ def teacher_view_club(request, id):
 
     passcode = club.passcode
 
-    return render(request, "view_club_test.html", {"user": user, "school": school, "announcements": announcements, "events": events, "members": members, "passcode": passcode, "club": club})
+    return render(request, "view_club_test.html", {"user": user, "school": school, "announcements": announcements, "events": events, "members": members, "passcode": passcode, "club": club, "member2": member})
 
 
 @login_required
