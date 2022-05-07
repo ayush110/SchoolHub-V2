@@ -1,5 +1,14 @@
 # SchoolHub-V2
-<img width="936" alt="image" src="https://user-images.githubusercontent.com/67121244/167225985-6fafc0ee-b08e-4a1c-8001-8300810e14cd.png">
+
+## Demos
+
+### Teacher View
+
+https://user-images.githubusercontent.com/67121244/167254388-f0edbf19-d53d-40d8-b94f-933ec4fb4a6a.mp4
+
+### Student View
+
+https://user-images.githubusercontent.com/67121244/167254395-d40ad1d8-a672-4c23-bc20-614a8983e0a6.mp4
 
 
 # Inspiration
